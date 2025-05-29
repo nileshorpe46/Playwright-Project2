@@ -7,11 +7,16 @@ test('page fixture test', async ({page})=>{
     await page.locator('input#username').fill('')
     await page.locator('input#username').fill('rahulshettyacademy');
     await page.locator('input#password').fill('learning');
-    await page.locator('input#signInBtn').click();
+    // await page.locator('input#signInBtn').click();
     // await expect(page.locator("div[style*='block']")).toContainText('Incorrect');
-    console.log(await page.locator('h4.card-title a').nth(0).textContent());
-    console.log(await page.locator('h4.card-title a').first().textContent());
-    console.log(await page.locator('h4.card-title a').last().textContent());
+    // console.log(await page.locator('h4.card-title a').nth(0).textContent());
+    // console.log(await page.locator('h4.card-title a').first().textContent());
+    // console.log(await page.locator('h4.card-title a').last().textContent());
+
+    await page.locator('input#usertype').nth(1).check();
+    await page.locator('button#okayBtn').click();
+    await page.pause();
+    
 });
 
 
@@ -24,6 +29,26 @@ test('wait mechanism test', async ({page})=>{
     await page.locator('div.card-body b').last().waitFor();
     let list = await page.locator('div.card-body b').allTextContents();
     console.log(list);
-    
-
 })
+
+test('child window test', async ({browser}) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    const pagelink = await page.locator('[href*="documents-request"]'); 
+
+    const [newPage] = await Promise.all([context.waitForEvent('page'), pagelink.click()]);
+
+    let linktext = await newPage.locator('.red').textContent();
+    let finaltext = linktext.split('@')[1].split(' ')[0]
+    console.log(finaltext);
+    
+    
+})
+
+
+
+
+
+
+
