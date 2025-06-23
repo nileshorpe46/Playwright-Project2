@@ -15,7 +15,7 @@ test('page fixture test', async ({page})=>{
 
     await page.locator('input#usertype').nth(1).check();
     await page.locator('button#okayBtn').click();
-    await page.pause();
+    // await page.pause();
     
 });
 
@@ -44,7 +44,23 @@ test('child window test', async ({browser}) => {
     console.log(finaltext);
     
     
-})
+});
+
+test('playwright selectors test', async({browser})=>{
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    await page.goto('https://rahulshettyacademy.com/angularpractice/');
+    await page.getByLabel('Check me out if you Love IceCreams!').check();
+    await page.getByLabel(/Stu/).check();
+    await page.getByLabel(/Gend/).selectOption('Female');
+    await page.getByPlaceholder(/Pass/).fill('mypassword');
+    
+});
+
+
+
+
 
 
 
